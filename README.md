@@ -1,6 +1,5 @@
 # Maximum Leaf Spanning Tree (MLST) Algorithms
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A collaborative project to implement an exhaustive and non-exhaustive algorithms for finding the spanning tree with the maximum number of leaves. This problem is NP-hard, and solutions have applications in network design and circuit layout optimization.
 
@@ -36,7 +35,7 @@ Given a connected undirected graph \( G = (V, E) \), the **Maximum Leaf Spanning
     So, if the optimal spanning tree has 10 leaves, a 2-approximation algorith should give you a spanning tree with at least 5 leaves.
 
 - **Optimal Spanning Tree for an MLST**
-  - for the context of this proble, the optimal spanning tree is the spanning tree with the most leaves.
+  - for the context of this problem, the optimal spanning tree is the spanning tree with the most leaves.
   - However, there are no efficient algorithm (known) to find the optimal solution as the MLST is NP-hard.
 ---
 
