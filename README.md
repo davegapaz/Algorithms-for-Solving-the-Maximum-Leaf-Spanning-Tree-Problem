@@ -62,7 +62,7 @@ Given a connected undirected graph \( G = (V, E) \), the **Maximum Leaf Spanning
 
 ## Installation
 
-## Reference
+## References
 ### 1. 2-Approximation Algorithm for Finding a Spanning Tree with Maximum Number of Leaves by Solis-Oba (`References`)
 
 
