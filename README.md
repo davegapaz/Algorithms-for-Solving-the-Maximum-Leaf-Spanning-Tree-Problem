@@ -50,7 +50,7 @@ Given a connected undirected graph \( G = (V, E) \), the **Maximum Leaf Spanning
 ### 2. Heuristic/Approximation (`algorithms/heuristic`)
 - **Approach**: 
   - **Greedy Strategy**: Prioritize high-degree vertices as internal nodes.
-  - **3-Approximation**: Based on [Lu & Ravi (1996)](https://doi.org/10.1006/jagm.1998.0944), iteratively prune "non-leafable" nodes.
+  - **2-Approximation**: Based on [Solis-Oba (1996)](https://link.springer.com/article/10.1007/s00453-015-0080-0), iteratively prune "non-leafable" nodes.
 - **Pros**: Runs in \( O(|E| \log |V|) \), suitable for large graphs.
 - **Cons**: May not find the optimal solution.
 - **Implementation**: Uses NetworkX for graph operations.
