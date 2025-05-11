@@ -11,8 +11,6 @@ A collaborative project to implement an exhaustive and non-exhaustive algorithms
 - [Installation](#installation)
 - [Usage](#usage)
 - [Repository Structure](#repository-structure)
-- [Contributing](#contributing)
-- [License](#license)
 - [References](#references)
 
 ---
@@ -41,7 +39,7 @@ Given a connected undirected graph \( G = (V, E) \), the **Maximum Leaf Spanning
 
 ## Algorithms
 
-### 1. Exhaustive Search (`algorithms/exhaustive`)
+### 1. Exhaustive Search  
 - **Approach**: Explore all possible spanning trees using Combination and get the spanning tree with the highest number of leaves
 - **Pros**: Guarantees an optimal solution.
 - **Cons**: Only feasible for small graphs (\(|V| < 20\)).
@@ -50,16 +48,21 @@ Given a connected undirected graph \( G = (V, E) \), the **Maximum Leaf Spanning
 ### 2. Heuristic/Approximation (`algorithms/heuristic`)
 - **Approach**: 
   - **Greedy Strategy**: Prioritize high-degree vertices as internal nodes.
-  - **2-Approximation**: Based on [Solis-Oba (1996)](https://link.springer.com/article/10.1007/s00453-015-0080-0), iteratively prune "non-leafable" nodes.
-- **Pros**: Runs in \( O(|E| \log |V|) \), suitable for large graphs.
-- **Cons**: May not find the optimal solution.
-- **Implementation**: Uses NetworkX for graph operations.
+  - **2-Approximation**: Based on [Solis-Oba (1996)](https://link.springer.com/article/10.1007/s00453-015-0080-0),
+      - **Maximally Leafy Forest**: Construct a forest where nodes are constrained to have **degree >= 3** where possible, maximizing internal nodes.
+      - **Tiered Edge Connection**: Merge foreces components using unused edges in strict priority order:
+          1. Internal-internal edges (preserve leaves),
+          2. Internal-leaf edges,
+          3. Leaf-leaf edges (minimize leaf loss).
+- **Pros**: 2-approximation guarantees (50% of optimal leaves).
+- **Cons**: More complex than simpler heuristics; not guaranteed to be optimal
+- **Complexity**: O(|E| 𝛼(|𝑉|)) using Union-Find with path compression (near-linear time).
 
 ---
 
 ## Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/maximum-leaf-spanning-tree.git
-   cd maximum-leaf-spanning-tree
+## Reference
+### 1. 2-Approximation Algorithm for Finding a Spanning Tree with Maximum Number of Leaves by Solis-Oba (`References`)
+
+
