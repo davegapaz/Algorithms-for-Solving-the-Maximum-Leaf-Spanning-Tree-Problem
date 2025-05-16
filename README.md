@@ -39,28 +39,62 @@ Given a connected undirected graph \( G = (V, E) \), the **Maximum Leaf Spanning
 
 ## Algorithms
 
-### 1. Exhaustive Search  
-- **Approach**: Explore all possible spanning trees using Combination and get the spanning tree with the highest number of leaves
+### 1. Brute Force (Exhaustive Search)
+- **Implementation**: See `gapaz-mapute_project.c`
+- **Approach**: Tries all possible combinations of edges that could form a spanning tree. For each valid spanning tree, it counts the number of leaves (nodes with degree 1). The tree with the most leaves is saved and displayed at the end.
+- **How it works**:
+  1. Generate all combinations of n-1 edges from the input graph.
+  2. For each combination, check if it forms a connected tree (using Union-Find/DSU).
+  3. Count the number of leaves in the tree.
+  4. Track and print the best tree found (with the most leaves).
 - **Pros**: Guarantees an optimal solution.
-- **Cons**: Only feasible for small graphs (\(|V| < 20\)).
-- **Complexity**: \( O(|V|^{|V|}) \) (impractical for large graphs).
+- **Cons**: Only feasible for small graphs due to combinatorial explosion.
+- **Complexity**: O(C(m, n-1) × n) (impractical for large graphs).
+- **Usage**: Edit the test cases in `gapaz-mapute_project.c` to try different graphs. Run the program to see all valid spanning trees and the one with the most leaves.
 
-### 2. Heuristic/Approximation (`algorithms/heuristic`)
-- **Approach**: 
+### 2. Heuristic/Approximation (Solis-Oba 2-Approximation)
+- **Implementation**: See `gapaz-mapute-NE_project.c` for implementation.
+- **Approach**:
   - **Greedy Strategy**: Prioritize high-degree vertices as internal nodes.
   - **2-Approximation**: Based on [Solis-Oba (1996)](https://link.springer.com/article/10.1007/s00453-015-0080-0),
       - **Maximally Leafy Forest**: Construct a forest where nodes are constrained to have **degree >= 3** where possible, maximizing internal nodes.
-      - **Tiered Edge Connection**: Merge foreces components using unused edges in strict priority order:
+      - **Tiered Edge Connection**: Merge forest components using unused edges in strict priority order:
           1. Internal-internal edges (preserve leaves),
           2. Internal-leaf edges,
           3. Leaf-leaf edges (minimize leaf loss).
 - **Pros**: 2-approximation guarantees (50% of optimal leaves).
-- **Cons**: More complex than simpler heuristics; not guaranteed to be optimal
-- **Complexity**: O(|E| 𝛼(|𝑉|)) using Union-Find with path compression (near-linear time).
-
+- **Cons**: More complex than simpler heuristics; not guaranteed to be optimal.
+- **Complexity**: O(|E| 𝛼(|V|)) using Union-Find with path compression (near-linear time).
+- **Usage**: Edit the test cases in `gapaz-mapute-NE_project.c` to try different graphs. Run the program to see all valid spanning trees and the one with the most leaves.
 ---
 
 ## Installation
+
+1. **Clone the repository:**
+  ```bash
+  git clone https://github.com/your-username/Algorithms-for-Solving-the-Maximum-Leaf-Spanning-Tree-Problem.git
+  cd Algorithms-for-Solving-the-Maximum-Leaf-Spanning-Tree-Problem
+  ```
+
+2. **Compile the C programs:**
+  ```bash
+  gcc gapaz-mapute_project.c -o brute_force
+  gcc gapaz-mapute-NE_project.c -o two_approx
+  ```
+
+## Usage
+
+- **Run the brute force (exhaustive) algorithm:**
+  ```bash
+  ./brute_force
+  ```
+
+- **Run the heuristic (2-approximation) algorithm:**
+  ```bash
+  ./two_approx
+  ```
+
+- *Note:* You can edit the test cases directly in the respective `.c` files before compiling to try different graphs.
 
 ## References
 ### 1. 2-Approximation Algorithm for Finding a Spanning Tree with Maximum Number of Leaves by Solis-Oba (`References`)

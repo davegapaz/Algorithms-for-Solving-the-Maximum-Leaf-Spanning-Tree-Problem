@@ -335,7 +335,8 @@ int main() {
     // };
     // int m = 10;
 
-
+    // Test Case 11: Big graph with 30 nodes
+    // Expected Max Leaves: 23
     const int N = 30;
     Edge edges[] = {
         // Binary tree structure (0 to 14)
