@@ -33,11 +33,11 @@ void add_edge(Graph *g, int u, int v) {
 }
 
 // Compare function for sorting (descending degree)
-int compare(void *arg, const void *a, const void *b) {
-    int *degree = (int *)arg;
+static int *g_degree = NULL;
+int compare(const void *a, const void *b) {
     int u = *(int *)a;
     int v = *(int *)b;
-    return degree[v] - degree[u]; // Descending
+    return g_degree[v] - g_degree[u]; // Descending
 }
 
 void dfs_greedy(const Graph *g, int node, int *visited, int parent, Edge tree[], int *tree_index) {
@@ -56,8 +56,8 @@ void dfs_greedy(const Graph *g, int node, int *visited, int parent, Edge tree[],
         }
     }
 
-    // Fix: Cast g->degree to void* to avoid const qualifier warning
-    qsort_s(neighbors, neighbor_count, sizeof(int), compare, (void *)g->degree);
+    g_degree = (int *)g->degree;
+    qsort(neighbors, neighbor_count, sizeof(int), compare);
 
     for (int i = 0; i < neighbor_count; i++) {
         int next = neighbors[i];
@@ -73,7 +73,8 @@ int build_spanning_tree_greedy(Graph *g, Edge tree[]) {
     // Start DFS from the node with the highest degree
     int nodes[MAX_NODES];
     for (int i = 0; i < g->n; i++) nodes[i] = i;
-    qsort_s(nodes, g->n, sizeof(int), compare, g->degree);
+    g_degree = g->degree;
+    qsort(nodes, g->n, sizeof(int), compare);
 
     dfs_greedy(g, nodes[0], visited, -1, tree, &tree_index);
 
@@ -161,12 +162,12 @@ int main() {
 
     // Test Case 5: Two triangles (0-1-2, 3-4-5), connected by bridge (2-3), plus extra edges
     // Expected Max Leaves: 4
-    // const int n = 6;
-    // Graph g;
-    // init_graph(&g, n);
-    // add_edge(&g, 0, 1); add_edge(&g, 1, 2); add_edge(&g, 2, 0);
-    // add_edge(&g, 3, 4); add_edge(&g, 4, 5); add_edge(&g, 5, 3);
-    // add_edge(&g, 2, 3); add_edge(&g, 0, 5); add_edge(&g, 1, 4);
+    const int n = 6;
+    Graph g;
+    init_graph(&g, n);
+    add_edge(&g, 0, 1); add_edge(&g, 1, 2); add_edge(&g, 2, 0);
+    add_edge(&g, 3, 4); add_edge(&g, 4, 5); add_edge(&g, 5, 3);
+    add_edge(&g, 2, 3); add_edge(&g, 0, 5); add_edge(&g, 1, 4);
 
     // Test Case 6: 2x2 Grid Graph (Square)
     // Expected Max Leaves: 2
@@ -202,13 +203,13 @@ int main() {
 
     // Test Case 10: Complete Graph K5
     // Expected Max Leaves: 4
-    const int n = 5;
-    Graph g;
-    init_graph(&g, n);
-    add_edge(&g, 0, 1); add_edge(&g, 0, 2); add_edge(&g, 0, 3); add_edge(&g, 0, 4);
-    add_edge(&g, 1, 2); add_edge(&g, 1, 3); add_edge(&g, 1, 4);
-    add_edge(&g, 2, 3); add_edge(&g, 2, 4);
-    add_edge(&g, 3, 4);
+    // const int n = 5;
+    // Graph g;
+    // init_graph(&g, n);
+    // add_edge(&g, 0, 1); add_edge(&g, 0, 2); add_edge(&g, 0, 3); add_edge(&g, 0, 4);
+    // add_edge(&g, 1, 2); add_edge(&g, 1, 3); add_edge(&g, 1, 4);
+    // add_edge(&g, 2, 3); add_edge(&g, 2, 4);
+    // add_edge(&g, 3, 4);
 
     Edge tree[MAX_NODES]; // Spanning tree will have n - 1 edges
     int tree_size = build_spanning_tree_greedy(&g, tree);
