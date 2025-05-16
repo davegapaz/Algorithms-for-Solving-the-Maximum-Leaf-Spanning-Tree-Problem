@@ -29,7 +29,6 @@ typedef struct {
     int u, v;
 } Edge;
 
-// DSU (Union-Find) functions
 // These help check if a set of edges forms a connected tree (no cycles, all nodes connected)
 // Each node starts as its own parent. 'find' locates the root of a node's set.
 int find(int x, int parent[]) {
@@ -138,34 +137,42 @@ int best_leaf_count = 0;
 
 // Recursive function to generate all combinations of k edges from the list of edges
 // For each combination, checks if it forms a valid spanning tree and updates the best tree if needed
+/**
+ * Generates all possible combinations of k edges from a given set of m edges.
+ *
+ * @param edges   Pointer to the array of all available edges.
+ * @param m       Total number of available edges in the edges array.
+ * @param k       Number of edges to select for each combination.
+ * @param n       Total number of vertices in the graph (may be used for validation or further processing).
+ * @param start   Current starting index in the edges array for combination generation.
+ * @param current Pointer to the array holding the current combination of edges being constructed.
+ * @param cpos    Current position in the current combination array to insert the next edge.
+ */
 void generate_combinations(Edge *edges, int m, int k, int n, int start, Edge *current, int cpos) {
-    /**
-     * If we've picked k edges (i.e., cpos == k), this means we have selected a complete combination
-     * of k edges from the available set. At this point, we can process or evaluate this specific
-     * combination as required by the algorithm. The condition cpos == k ensures that we only process
-     * combinations that have exactly k edges, which is important for problems that require examining
-     * all possible subsets of a certain size (such as finding a spanning tree with a fixed number of edges).
-     */
-    // If we've picked k edges, process this combination
+    // Step 1: Base case - if we've picked k edges, process this combination
     if (cpos == k) {
+        // Step 2: Check if the current combination forms a valid spanning tree
         if (is_connected(current, k, n)) {
             int leaves = count_leaves(current, k, n);
             static int combo_index = 1;
             printf("Valid Spanning Tree #%d | Leaves: %d\n", combo_index++, leaves);
             print_combo_and_leaf_count(current, k, n, 0);
 
+            // Step 3: If this tree has more leaves than the best so far, update the best
             if (leaves > best_leaf_count) {
                 best_leaf_count = leaves;
                 memcpy(best_tree, current, k * sizeof(Edge));
                 printf("  [New Best Tree Found]\n");
             }
         }
+        // Step 4: Return to stop further recursion for this combination
         return;
     }
 
-    // Loop to try each possible edge at the current position
+    // Step 5: Recursive case - try each possible edge at the current position
     for (int i = start; i < m; i++) {
-        current[cpos] = edges[i];
+        current[cpos] = edges[i]; // Place edge at current position
+        // Step 6: Recurse to fill the next position in the combination
         generate_combinations(edges, m, k, n, i + 1, current, cpos + 1);
     }
 }
