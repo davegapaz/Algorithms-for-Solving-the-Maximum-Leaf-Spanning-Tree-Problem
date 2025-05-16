@@ -1,22 +1,24 @@
-// This program finds a spanning tree with the maximum number of leaf nodes (Maximum Leaf Spanning Tree Problem)
-// It uses exhaustive search: tries all possible combinations of edges that could form a spanning tree
-// For each valid spanning tree, it counts the number of leaves (nodes with degree 1)
-// The tree with the most leaves is saved and displayed at the end
-//
-// Key Concepts:
-// - Spanning Tree: A subset of edges that connects all nodes without cycles (n-1 edges for n nodes)
-// - Leaf Node: A node with only one connection (degree 1)
-// - Exhaustive Search: Tries every possible combination to guarantee the best answer
-//
-// Main Steps:
-// 1. Generate all combinations of n-1 edges from the input graph
-// 2. For each combination, check if it forms a connected tree (using Union-Find/DSU)
-// 3. Count the number of leaves in the tree
-// 4. Track and print the best tree found (with the most leaves)
-//
-// Usage:
-// - Edit the test cases in main() to try different graphs
-// - Run the program to see all valid spanning trees and the one with the most leaves
+/*
+This program finds a spanning tree with the maximum number of leaf nodes (Maximum Leaf Spanning Tree Problem)
+It uses exhaustive search: tries all possible combinations of edges that could form a spanning tree
+For each valid spanning tree, it counts the number of leaves (nodes with degree 1)
+The tree with the most leaves is saved and displayed at the end
+
+Key Concepts:
+- Spanning Tree: A subset of edges that connects all nodes without cycles (n-1 edges for n nodes)
+- Leaf Node: A node with only one connection (degree 1)
+- Exhaustive Search: Tries every possible combination to guarantee the best answer
+
+Main Steps:
+1. Generate all combinations of n-1 edges from the input graph
+2. For each combination, check if it forms a connected tree (using Union-Find/DSU)
+3. Count the number of leaves in the tree
+4. Track and print the best tree found (with the most leaves)
+
+Usage:
+- Edit the test cases in main() to try different graphs
+- Run the program to see all valid spanning trees and the one with the most leaves
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
