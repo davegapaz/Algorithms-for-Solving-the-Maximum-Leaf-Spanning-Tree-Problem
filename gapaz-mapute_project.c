@@ -21,9 +21,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-#define MAX_NODES 10
-#define MAX_EDGES 20
+#define MAX_NODES 30
+#define MAX_EDGES 40
 
 typedef struct {
     int u, v;
@@ -239,11 +240,11 @@ int main() {
 
     // Test Case 1: Complete Graph K4
     // Expected Max Leaves: 3
-    const int N = 4;
-    Edge edges[] = {
-        {0, 1}, {0, 2}, {0, 3}, {1, 2}, {1, 3}, {2, 3}
-    };
-    int m = 6;
+    // const int N = 4;
+    // Edge edges[] = {
+    //     {0, 1}, {0, 2}, {0, 3}, {1, 2}, {1, 3}, {2, 3}
+    // };
+    // int m = 6;
 
     // Test Case 2: Path Graph (0-1-2-3)
     // Expected Max Leaves: 2
@@ -334,13 +335,40 @@ int main() {
     // };
     // int m = 10;
 
+
+    const int N = 30;
+    Edge edges[] = {
+        // Binary tree structure (0 to 14)
+        {0,1}, {0,2},
+        {1,3}, {1,4},
+        {2,5}, {2,6},
+        {3,7}, {3,8},
+        {4,9}, {4,10},
+        {5,11}, {5,12},
+        {6,13}, {6,14},
+
+        // Extra leaves (15 to 26)
+        {0,15}, {1,16}, {2,17}, {3,18}, {4,19}, {5,20},
+        {6,21}, {0,22}, {1,23}, {2,24}, {3,25}, {4,26},
+
+        // Extra leaves for redundancy
+        {0,27}, {1,28},
+
+        // Final node to keep graph connected
+        {2,29}
+    };
+    int m = sizeof(edges)/sizeof(edges[0]);
+
     Edge current_combo[MAX_NODES];  // Temporary array to store current combination of edges
 
     printf("Exhaustive Search: Evaluating All Possible Spanning Trees\n");
     printf("----------------------------------------------------------\n");
 
+    // add start timer
+    clock_t start_time = clock();
     // Try all possible combinations of N-1 edges
     generate_combinations(edges, m, N - 1, N, 0, current_combo, 0);
+    clock_t end_time = clock();
 
     printf("----------------------------------------------------------\n");
     printf("Exhaustive Search Complete: All combinations have been checked.\n\n");
@@ -349,5 +377,8 @@ int main() {
     print_best_tree(N);
     print_adjacency_matrix(N);
 
+    double time_taken = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Time taken: %f seconds\n", time_taken);
+    printf("----------------------------------------------------------\n");
     return 0;
 }
